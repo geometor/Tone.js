@@ -1,0 +1,4 @@
+#toggle {
+  &.active span:first-child { display: none; }
+  &:not(.active) span:last-child { display: none; }
+}

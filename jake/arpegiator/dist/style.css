@@ -1,0 +1,54 @@
+html, body {
+  height: 100%;
+}
+
+header {
+  overflow: hidden;
+  height: 100%;
+}
+header input {
+  position: absolute;
+  left: -9999px;
+}
+header input#chord-1:checked ~ ul label[for="chord-1"] {
+  background: tomato;
+}
+header input#chord-2:checked ~ ul label[for="chord-2"] {
+  background: tomato;
+}
+header input#chord-3:checked ~ ul label[for="chord-3"] {
+  background: tomato;
+}
+header input#chord-4:checked ~ ul label[for="chord-4"] {
+  background: tomato;
+}
+header input#chord-5:checked ~ ul label[for="chord-5"] {
+  background: tomato;
+}
+header ul {
+  height: 100%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+header ul li {
+  flex: 1;
+}
+header ul li label {
+  height: 100%;
+  display: block;
+  cursor: pointer;
+  text-align: center;
+  padding: 0.5rem;
+  background: black;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  font-size: 3rem;
+}
+header ul li + li {
+  border-left: 4px solid #191919;
+}

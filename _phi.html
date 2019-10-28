@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+	<title>Phi Synth</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="icon" type="image/png" sizes="174x174" href="./favicon.png">
+
+	<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-bundle.js"></script>
+	<script src="./build/Tone.js"></script>
+	<script src="./examples/js/tonejs-ui.js"></script>
+</head>
+<body>
+
+	<script type="text/javascript">
+
+    // const synth = new Tone.Synth();
+
+    const synth = new Tone.Synth({
+    	"oscillator" : {
+    		"type" : "amtriangle",
+    		"harmonicity" : 2,
+    		"modulationType" : "sine"
+    	},
+    	"envelope" : {
+    		"attackCurve" : "exponential",
+    		"attack" : 0.05,
+    		"decay" : 0.1,
+    		"sustain" : 1,
+    		"release" : 1.5,
+    	},
+    	"portamento" : 0.05
+    });
+
+    synth.toMaster();
+
+    const notes = ["C4", "E4", "G4", "C5"];
+
+    Tone.Transport.scheduleRepeat(time => {
+    	repeat(time);
+    }, "4n");
+
+    // Tone.Transport.scheduleRepeat(time => {
+    // 	repeat2(time);
+    // }, "1n");
+
+    var index = 0;
+
+    function repeat(time) {
+      let note = notes[index % notes.length];
+      synth.triggerAttackRelease(note, "4n", time)
+      index++;
+    }
+
+    Tone.Transport.start();
+
+    setTimeout( () => {Tone.Transport.stop()}, 4000)
+
+    // var poly = new Tone.PolySynth(6, Tone.Synth, {
+    //   oscillator : {
+    // 		type : "square"
+    // 	}
+    // }).toMaster();
+    // //set the attributes using the set interface
+    // // poly.set("detune", -1200);
+    // //play a chord
+    // poly.triggerAttackRelease(notes, "2n");
+
+		// //bind the interface
+		// document.querySelector("tone-piano").bind(synth);
+		// document.querySelector("tone-synth").bind(synth);
+    //
+	</script>
+</body>
+</html>
