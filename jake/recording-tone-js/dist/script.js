@@ -31,8 +31,8 @@ document.documentElement.addEventListener('mousedown', () => {
 
   recorder.ondataavailable = evt => chunks.push(evt.data);
   recorder.onstop = evt => {
-    // let blob = new Blob(chunks, { type: 'audio/ogg; codecs=opus' });
-    let blob = new Blob(chunks, { type: 'audio/ogg; codecs=opus' });
+    let blob = new Blob(chunks, { type: 'audio/webm;codecs=opus' });
+    // let blob = new Blob(chunks, { type: 'audio/webm' });
     audio.src = URL.createObjectURL(blob);
   };
 
