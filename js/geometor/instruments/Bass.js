@@ -11,8 +11,9 @@ export class Bass extends Tone.FMSynth {
         },
         "envelope": {
           "attack": 0.08,
-          "decay": 0.3,
+          "decay": 0.1,
           "sustain": 0,
+          "release": 0.1
         },
       },
       "modulator": {
@@ -27,5 +28,25 @@ export class Bass extends Tone.FMSynth {
         },
       }
     })
+  }
+}
+
+//BASS
+var bassEnvelope = new Tone.AmplitudeEnvelope({
+  "attack" : 0.01,
+  "decay" : 0.2,
+  "sustain" : 0,
+}).toMaster();
+
+var bassFilter = new Tone.Filter({
+  "frequency" : 600,
+  "Q" : 8
+});
+
+export class Bass2 extends Tone.PulseOscillator{
+  constructor() {
+    super("A2", 0.4)
+    this.chain(bassFilter, bassEnvelope);
+
   }
 }

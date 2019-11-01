@@ -1,4 +1,5 @@
+export {Harmonics} from './instruments/Harmonics.js'
 export {Cymbal} from './instruments/Cymbal.js'
 export {Conga}  from './instruments/Conga.js'
-export {Bass}   from './instruments/Bass.js'
-export {Piano}  from './instruments/Piano.js'
+export {Bass, Bass2}   from './instruments/Bass.js'
+export {Piano, Ping as Ping, Ring}  from './instruments/Piano.js'

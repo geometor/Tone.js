@@ -1,4 +1,8 @@
-import {Cymbal, Conga, Piano, Ping, Ring, Bass as Bass} from './instruments.js'
+import {Cymbal, Conga, Piano, Ping, Ring, Bass as Bass, Harmonics} from './instruments.js'
+
+import * as presets from './presets/_index.js'
+
+console.dir(presets.synths.FMSynth.thinSaws)
 
 const audio = document.querySelector('audio');
 const dest = Tone.context.createMediaStreamDestination();
@@ -15,6 +19,21 @@ bass.connect(dest);
 
 const piano  = new Ping().toMaster();
 piano.connect(dest);
+
+var ping1Panner = new Tone.Panner(-1).toMaster();
+const ping1  = new Ping();
+// ping1.toMaster();
+ping1.connect(ping1Panner);
+ping1.connect(dest);
+
+var ping2Panner = new Tone.Panner(1).toMaster();
+const ping2  = new Ping();
+// ping2.toMaster();
+ping2.connect(ping2Panner);
+ping2.connect(dest);
+
+// let str = JSON.stringify(ping1)
+
 
 const ring  = new Ring().toMaster();
 ring.connect(dest);
@@ -58,43 +77,52 @@ document.documentElement.addEventListener('mousedown', () => {
 function playMusic() {
 
   Tone.Transport.bpm.value = 120;
-  Tone.Transport.stop("9:0:0")
+  Tone.Transport.stop("2:0:0")
 
-  setCymbalPart2();
-  // setKickPart();
-  setBass("0:2:0");
-  // line
-  setLine("0:3:0");
-  // vesica
-  setCircle("1:1:0");
-  // fade
-  setBass("1:4:0");
-  // 4 lines
-  setLine("2:1:0");
-  // triangle
-  setCircle("2:3:0");
-  // 2 medians
-  setLine("3:2:0");
-  // main circle
-  setCircle("3:4:0");
-  // fill
-  setBass("4:4:0");
-  // first golden
-  setLine("5:2:0");
-  // second golden
-  setLine("5:4:0");
+  setPoints(0)
+  setPoints("0:2:0")
 
-  //fill
-  setBass("7:1:0");
+  // setCymbalPart2();
+  // // setKickPart();
+  // setBass("0:2:0");
+  // // line
+  // setLine("0:3:0");
+  // // vesica
+  // setCircle("1:1:0");
+  // // fade
+  // setBass("1:4:0");
+  // // 4 lines
+  // setLine("2:1:0");
+  // // triangle
+  // setCircle("2:3:0");
+  // // 2 medians
+  // setLine("3:2:0");
+  // // main circle
+  // setCircle("3:4:0");
+  // // fill
+  // setBass("4:4:0");
+  // // first golden
+  // setLine("5:2:0");
+  // // second golden
+  // setLine("5:4:0");
+  //
+  // //fill
+  // setBass("7:1:0");
 
 }
 
 function setPoints(start) {
+
   var part = new Tone.Part(function(time, note) {
-    piano.triggerAttackRelease(note, "4n", time);
+    ping1.triggerAttackRelease(note, "4n", time);
   }, [
     ["0:0", "C6"],
-    ["0:0:1", "E6"],
+  ]).start(start);
+
+  var part = new Tone.Part(function(time, note) {
+    ping2.triggerAttackRelease(note, "4n", time);
+  }, [
+    ["0:0:2", "E6"],
   ]).start(start);
 }
 
