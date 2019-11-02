@@ -1,4 +1,6 @@
-export const tiny = {
+// AMSine2 AMSynth
+
+const settings = {
     "harmonicity": 2,
     "oscillator": {
         "type": "amsine2",
@@ -23,4 +25,20 @@ export const tiny = {
         "sustain": 0.2,
         "release": 0.4
     }
+}
+
+export class AMSine2 extends Tone.AMSynth {
+
+  constructor() {
+    super(settings)
+  }
+
+}
+
+export class PolyAMSine2 extends Tone.PolySynth {
+
+  constructor() {
+    super(4, AMSine2)
+  }
+
 }

@@ -1,7 +1,0 @@
-export * as AMSynth from './AMSynth/_index.js'
-export * as FMSynth from './FMSynth/_index.js'
-export * as MembraneSynth from './MembraneSynth/_index.js'
-export * as MetalSynth from './MetalSynth/_index.js'
-export * as MonoSynth from './MonoSynth/_index.js'
-export * as NoiseSynth from './NoiseSynth/_index.js'
-export * as Synth from './Synth/_index.js'

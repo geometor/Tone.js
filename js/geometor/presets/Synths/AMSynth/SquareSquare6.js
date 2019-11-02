@@ -1,4 +1,6 @@
-export const harmonics = {
+// Harmonics
+
+const settings = {
     "harmonicity": 3.999,
     "oscillator": {
         "type": "square"
@@ -19,4 +21,12 @@ export const harmonics = {
         "sustain": 0.8,
         "release": 0.1
     }
+}
+
+export class SquareSquare6 extends Tone.AMSynth {
+
+  constructor() {
+    super(settings)
+  }
+
 }

@@ -1,1 +1,1 @@
-export * as synths from './synths/_index.js'
+export * as Synths from './Synths/_index.js'
