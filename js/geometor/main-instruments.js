@@ -1,157 +1,127 @@
-import {Cymbal, Conga, Piano, Ping, Ring, Bass as Bass, Harmonics} from './instruments/_index.js'
+import * as Instruments from './instruments/_index.js'
+import * as Seqs from './Sequences/_index.js'
+import * as Effects from './Effects/_index.js'
 
-import * as presets from './presets/_index.js'
+import * as Synths from './Synths/_index.js'
 
 
-// const synth = new presets.Synths.AMSynth.AMSine2();
-const synth = presets.Synths.getSynth("Harmonic");
-const polySynth = new presets.Synths.AMSynth.PolyAMSine2();
+// var polySynth = new Synths.AMSynth.PolyAMSine2();
 
-synth.toMaster();
-polySynth.toMaster();
+
+
 
 //bind the interface
-document.querySelector("tone-piano").bind(synth);
-document.querySelector("tone-am-synth").bind(synth);
-document.querySelector("#demo1").onclick = playMusic;
+const picker = document.querySelector("#synthPicker")
+const poly = document.querySelector("#poly")
+
+function addSynthListToPicker(value, key, map) {
+  var el = document.createElement("option");
+  el.textContent = key;
+  el.value = key;
+  picker.appendChild(el);
+}
+
+Synths.synthList.forEach(addSynthListToPicker);
+
+picker.onchange = setSynth;
+poly.onchange = setSynth;
+
+var synth;
+setSynth();
+// Effects.addFreeverb(synth);
+
+function setSynth() {
+  var pick = picker.options[picker.selectedIndex].value
+  console.log("set: " + pick)
+
+  if (poly.checked) {
+    synth = Synths.getPolySynth(pick);
+
+    document.querySelector("tone-piano").bind(synth);
+    // document.querySelector("tone-am-synth").unbind();
+  } else {
+    synth = Synths.getSynth(pick);
+
+    document.querySelector("tone-piano").bind(synth);
+    document.querySelector("tone-am-synth").bind(synth);
+  }
+  synth.toMaster();
+}
+
+
+
+document.querySelector("#demo1").onclick = demo1;
+document.querySelector("#demo2").onclick = demo2;
 
 // playMusic()
 
-function playMusic() {
+function demo1() {
 
-  console.log("play")
+  console.log("demo1")
+  // Tone.Transport.position=0
+  Tone.Transport.cancel(0)
   Tone.Transport.bpm.value = 120;
-  Tone.Transport.stop("3:0:0")
 
-  setPoints(0)
-  setPoints("0:2")
-  setPianoPart1("1:0")
-  setPianoPart2("2:0")
 
-  Tone.Transport.start(0)
+  Seqs.setPoints(synth, "0:0")
+  Seqs.setPoints(synth, "0:1")
+  Seqs.setPianoPart1(synth, "1:1")
+  Seqs.setPianoPart2(synth, "2:1")
+  Tone.Transport.stop("3:0")
+
+  Tone.Transport.start(Tone.now())
 
 }
 
-function setPoints(start) {
+function demo2() {
+
+  console.log("demo2")
+  // Tone.Transport.position=0
+  Tone.Transport.cancel(0)
+  Tone.Transport.bpm.value = 120;
+
+  setPing1(synth, "0:1")
+  setPing2(synth, "0:2")
+  setPing2(synth, "0:3")
+  setPing2(synth, "0:4")
+
+  setPing1(synth, "1:1")
+  setPing2(synth, "1:2")
+  setPing2(synth, "1:3")
+  setPing2(synth, "1:4")
+
+
+  Tone.Transport.stop("2:0")
+
+  Tone.Transport.start(Tone.now())
+
+}
+
+function setPing1(synth, start) {
 
   var part1 = new Tone.Part(function(time, note) {
-    synth.triggerAttackRelease(note, "4n", time);
+    synth.triggerAttackRelease(note, "8n", time);
   }, [
     ["0:0", "C6"],
   ]).start(start);
-
-  var part2 = new Tone.Part(function(time, note) {
-    synth.triggerAttackRelease(note, "4n", time);
-  }, [
-    ["0:0:2", "E6"],
-  ]).start(start);
 }
+function setPing2(synth, start) {
 
-function setBass(start) {
-  var part = new Tone.Part(function(time, note) {
-    synth.triggerAttackRelease(note, "1n", time);
+  var part1 = new Tone.Part(function(time, note) {
+    synth.triggerAttackRelease(note, "8n", time);
   }, [
-    ["0:0", "C3"],
-  ]).start(start);
-}
-
-function setLine(start) {
-  setPoints(start);
-
-  var part = new Tone.Part(function(time, note) {
-    synth.triggerAttackRelease(note, "4n", time);
-  }, [
-    ["0:0", "E4"],
-  ]).start(start);
-}
-
-function setCircle(start) {
-  setPoints(start);
-
-  var part = new Tone.Part(function(time, note) {
-    polySynth.triggerAttackRelease(note, "4n", time);
-  }, [
-    ["0:0", "C4"],
-    ["0:1", "G4"],
-    ["0:2", "C4"],
+    ["0:0", "C5"],
   ]).start(start);
 }
 
 
-function setPianoPart1(start) {
-  var part = new Tone.Part(function(time, note) {
-    polySynth.triggerAttackRelease(note, "4n", time);
-  }, [
-    ["0:0", "C2"],
-    ["0:1", "E2"],
-    ["0:2", "C2"],
-    ["0:3", "G2"],
-  ]).start(start);
 
-}
-
-function setPianoPart2(start) {
-  var part2 = new Tone.Part(function(time, note) {
-    polySynth.triggerAttackRelease(note, "8n", time);
-  }, [
-    ["0:0", "C3"],
-    ["0:1", "E3"],
-    ["0:2", "C3"],
-    ["0:3", "G3"],
-  ]).start(start);
-}
-
-
-function setCymbalPart() {
-
-  var part = new Tone.Sequence(function(time, freq) {
-    synth.frequency.setValueAtTime(freq, time, Math.random() * 0.5 + 0.5);
-    synth.triggerAttack(time);
-  }, [
-    [300, null, 200],
-    [null, 200, 200],
-    [null, 200, null],
-    [200, null, 200]
-  ], "4n").start(0);
-
-  return part;
-
-}
-
-function setCymbalPart2() {
-
-  var part = new Tone.Sequence(function(time, freq) {
-    synth.frequency.setValueAtTime(freq, time, Math.random() * 0.5 + 0.5);
-    synth.triggerAttack(time);
-  }, [
-    [300, 200, ]
-  ], "8n").start(0);
-
-  return part;
-
-}
-
-function setCongaPart() {
-
-  var part = new Tone.Sequence(function(time, pitch) {
-    synth.triggerAttack(pitch, time, Math.random() * 0.5 + 0.5);
-  }, ["G2", "D3", "D3", "D3"], "4n").start(0);
-
-  return part;
-
-}
-
-function setKickPart() {
-
-  var part = new Tone.Sequence(function(time, pitch) {
-    synth.triggerAttack(pitch, time, Math.random() * 0.5 + 0.5);
-  }, ["G2"], "4n").start(0);
-
-  return part;
-
-}
-
-
+Tone.Transport.on("stop", () => {
+  console.log("transport stop")
+});
+Tone.Transport.on("start", () => {
+  console.log("transport start")
+});
 
 
 /////

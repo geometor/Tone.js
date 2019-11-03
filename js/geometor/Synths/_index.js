@@ -9,12 +9,19 @@ export * as NoiseSynth from './NoiseSynth/_index.js'
 export * as Synth from './Synth/_index.js'
 
 
-const synthList = new Map([
-  ['Harmonic', AMSynth.AMSine2],
-  ['Fat', AMSynth.FatSawtoothSquare],
+export const synthList = new Map([
+  ['AMSine2', AMSynth.AMSine2],
+  ['FatSawtoothSquare', AMSynth.FatSawtoothSquare],
+  ['PulseSquare', AMSynth.PulseSquare],
+  ['SawtoothSine', AMSynth.SawtoothSine],
+  ['SquareSquare6', AMSynth.SquareSquare6],
 ]);
 
 export function getSynth(name) {
   return new ( synthList.get(name) )()
+}
+
+export function getPolySynth(name) {
+  return new Tone.PolySynth(4, synthList.get(name) )
 }
 // console.log(bar);

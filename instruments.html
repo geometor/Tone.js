@@ -18,16 +18,22 @@
 </head>
 
 <body>
-  <tone-example>
-		<tone-explanation label="INSTRUMENT TESTER">
-       <button id="demo1" type="button" onclick="playMusic()">Demo 1</button> 
-		</tone-explanation>
 
-		<tone-content>
-			<tone-piano></tone-piano>
-			<tone-am-synth></tone-am-synth>
-		</tone-content>
-	</tone-example>
+  <tone-example>
+    <tone-explanation label="INSTRUMENT TESTER">
+      <button id="demo1" type="button">Demo 1</button>
+      <button id="demo2" type="button">Demo 2</button>
+      <select id="synthPicker">
+      </select>
+      <label for="poly">Poly: </label>
+      <input type="checkbox" name="poly" id="poly">
+    </tone-explanation>
+
+    <tone-content>
+      <tone-piano></tone-piano>
+      <tone-am-synth></tone-am-synth>
+    </tone-content>
+  </tone-example>
 
 </body>
 
