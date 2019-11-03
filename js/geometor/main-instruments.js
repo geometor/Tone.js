@@ -2,6 +2,7 @@ import * as Instruments from './instruments/_index.js'
 import * as Seqs from './Sequences/_index.js'
 import * as Effects from './Effects/_index.js'
 import * as Synths from './Synths/_index.js'
+import * as Rhythms from './Rhythms/_index.js'
 
 //bind the interface
 const picker = document.querySelector("#synthPicker")
@@ -45,6 +46,7 @@ function setSynth() {
 
 document.querySelector("#demo1").onclick = demo1;
 document.querySelector("#demo2").onclick = demo2;
+document.querySelector("#demo3").onclick = demo3;
 
 // playMusic()
 
@@ -90,6 +92,18 @@ function demo2() {
 
 }
 
+function demo3() {
+  console.log("demo3")
+  // Tone.Transport.position=0
+  Tone.Transport.cancel(0)
+  Tone.Transport.bpm.value = 120;
+
+  Rhythms.padMaj(synth, 0, "C4");
+
+  Tone.Transport.stop("4:0")
+
+  Tone.Transport.start(Tone.now())
+}
 function setPing1(synth, start) {
 
   var part1 = new Tone.Part(function(time, note) {
