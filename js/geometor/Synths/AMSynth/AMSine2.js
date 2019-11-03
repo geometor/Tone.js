@@ -34,11 +34,3 @@ export class AMSine2 extends Tone.AMSynth {
   }
 
 }
-
-export class PolyAMSine2 extends Tone.PolySynth {
-
-  constructor() {
-    super(4, AMSine2)
-  }
-
-}

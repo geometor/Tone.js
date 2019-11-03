@@ -14,6 +14,7 @@ export const synthList = new Map([
   ['FatSawtoothSquare', AMSynth.FatSawtoothSquare],
   ['PulseSquare', AMSynth.PulseSquare],
   ['SawtoothSine', AMSynth.SawtoothSine],
+  ['SawtoothTriangle', AMSynth.SawtoothTriangle],
   ['SquareSquare6', AMSynth.SquareSquare6],
 ]);
 

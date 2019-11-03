@@ -1,14 +1,7 @@
 import * as Instruments from './instruments/_index.js'
 import * as Seqs from './Sequences/_index.js'
 import * as Effects from './Effects/_index.js'
-
 import * as Synths from './Synths/_index.js'
-
-
-// var polySynth = new Synths.AMSynth.PolyAMSine2();
-
-
-
 
 //bind the interface
 const picker = document.querySelector("#synthPicker")
