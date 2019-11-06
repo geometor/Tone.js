@@ -22,6 +22,8 @@ export const synthList = new Map([
   ['SawtoothSine', AMSynth.SawtoothSine],
   ['SawtoothTriangle', AMSynth.SawtoothTriangle],
   ['SquareSquare6', AMSynth.SquareSquare6],
+  ['ElectricCello', FMSynth.ElectricCello],
+  ['Kalimba', FMSynth.Kalimba],
 ]);
 
 export function getSynth(name) {
@@ -29,6 +31,6 @@ export function getSynth(name) {
 }
 
 export function getPolySynth(name) {
-  return new Tone.PolySynth(4, synthList.get(name) )
+  return new Tone.PolySynth(8, synthList.get(name) )
 }
 // console.log(bar);

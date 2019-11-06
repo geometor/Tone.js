@@ -1,116 +1,217 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
-	<title>LOCAL offline</title>
+  <title>Offline 2</title>
 
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<link rel="icon" type="image/png" sizes="174x174" href="./favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="icon" type="image/png" sizes="174x174" href="./favicon.png">
 
-	<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-bundle.js"></script>
-	<script src="../build/Tone.js"></script>
-	<script src="./js/tonejs-ui.js"></script>
-	<style type="text/css">
-		tone-button {
-			margin-bottom: 10px;
-		}
-	</style>
+  <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-bundle.js"></script>
+  <script src="../js/Tone.js"></script>
+  <script src="./js/tonejs-ui.js"></script>
+  <style type="text/css">
+    tone-button {
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
+
 <body>
-	<tone-example>
-		<tone-loader></tone-loader>
+  <tone-example>
+    <!-- <tone-loader></tone-loader> -->
 
-		<tone-explanation label="Offline Rendering">
-			Tone.Offline renders a chunk of Tone.js code into an AudioBuffer. An offline instance of Tone.Transport is passed into the callback which can be used to schedule events. It may take a moment to render the sound.
-			<br><br>
-			<a href="https://tonejs.github.io/docs/Tone#offline-static">Tone.Offline</a> docs.
-		</tone-explanation>
+    <tone-explanation label="Offline Rendering">
+      Tone.Offline renders a chunk of Tone.js code into an AudioBuffer. An offline instance of Tone.Transport is passed into the callback which can be used to schedule events. It may take a moment to render the sound.
+      <br><br>
+      <a href="https://tonejs.github.io/docs/Tone#offline-static">Tone.Offline</a> docs.
 
-		<tone-content>
-			<tone-button label="Render"></tone-button>
-			<tone-play-toggle disabled></tone-play-toggle>
-		</tone-content>
-	</tone-example>
+      <a id="download_link" href="#">download generated audio</a>
+      <audio controls></audio>
 
-	<script type="text/javascript">
-		//load the buffer for use in the convolver
-		var buffer = new Tone.Buffer("./audio/IRs/chorus-feedback.wav");
+    </tone-explanation>
 
-    function playMusic() {
-      var reverb = new Tone.Convolver(buffer).toMaster();
-      reverb.wet.value = 0.2;
+    <tone-content>
+      <tone-button label="Render"></tone-button>
+      <tone-play-toggle disabled></tone-play-toggle>
+    </tone-content>
+  </tone-example>
+  <script type="text/javascript">
+    //load the buffer for use in the convolver
+    // var buffer = new Tone.Buffer("./audio/IRs/chorus-feedback.wav");
 
-      var pannerA = new Tone.Panner(-1).connect(reverb);
+    function generateAudioOffline() {
+      //the makeMusic function receives the Offline Transport as a parameter
+      return Tone.Offline(makeMusic, 10);
+    }
+
+
+    function makeMusic(Transport) {
+
+      var pannerA = new Tone.Panner(-1).toMaster();
       var synthA = new Tone.Synth({
-        "envelope" : {
-          "attack" : 0.01,
-          "decay" : 5,
-          "sustain" : 0
+        "envelope": {
+          "attack": 0.01,
+          "decay": 5,
+          "sustain": 0
         },
-        "oscillator" : {
-          "type" : "sawtooth4"
+        "oscillator": {
+          "type": "sawtooth4"
         }
       }).connect(pannerA);
-      var seqA = new Tone.Sequence(function(time, note){
+      var seqA = new Tone.Sequence(function(time, note) {
         synthA.triggerAttack(note, time);
       }, ["A4", "G4", "G#4", "F#4", "E4"], "8n").start(0);
       seqA.loop = false;
 
-      var pannerB = new Tone.Panner(1).connect(reverb);
+      var pannerB = new Tone.Panner(1).toMaster();
       var synthB = new Tone.Synth({
-        "envelope" : {
-          "attack" : 0.001,
-          "decay" : 3,
-          "sustain" : 0
+        "envelope": {
+          "attack": 0.001,
+          "decay": 3,
+          "sustain": 0
         },
-        "oscillator" : {
-          "type" : "square8"
+        "oscillator": {
+          "type": "square8"
         }
       }).connect(pannerB);
-      var seqB = new Tone.Sequence(function(time, note){
+      var seqB = new Tone.Sequence(function(time, note) {
         synthB.triggerAttack(note, time);
       }, ["G#4", "A4", "G4", "F4", "C4"], "8n").start("16n");
       seqB.loop = false;
 
       var bass = new Tone.MonoSynth({
-        "envelope" : {
-          "attack" : 0.01,
-          "decay" : 3,
-          "sustain" : 0.1
+        "envelope": {
+          "attack": 0.01,
+          "decay": 3,
+          "sustain": 0.1
         },
       }).toMaster();
-      var bassSeq = new Tone.Sequence(function(time, note){
+      var bassSeq = new Tone.Sequence(function(time, note) {
         bass.triggerAttackRelease(note, "1n", time);
       }, ["C2", "C2", "F1", "F1"], "4n").start(0);
       bassSeq.loop = false;
 
-      Tone.Transport.bpm.value = 150;
-      Tone.Transport.start();    }
+      Transport.bpm.value = 60;
+      Transport.start();
+    }
 
-		function generateAudioOffline(){
-			// return Tone.Offline(function(Transport){
-      //
-      //
-			// }, 7);
-		}
+    //play the buffer with a Tone.Player when it's been generated
+    var player = new Tone.Player().toMaster();
 
-		//play the buffer with a Tone.Player when it's been generated
-		var player = new Tone.Player().toMaster();
+    //bind the interface
+    document.querySelector("tone-button").addEventListener("click", e => {
+      //button
+      e.target.setAttribute("label", "Rendering...");
+      e.target.setAttribute("disabled", "");
+
+      var buffer = generateAudioOffline().then(buffer => {
+        document.querySelector("tone-button").setAttribute("label", "Rendered");
+        player.buffer = buffer;
+        document.querySelector("tone-play-toggle").removeAttribute("disabled");
+        make_download(buffer, buffer.length);
+
+        // let blob = new Blob([buffer], { type: 'audio/webm;codecs=opus' });
+        const audio = document.querySelector('audio');
+        audio.src = URL.createObjectURL(buffer);
+
+      });
 
 
-		//bind the interface
-		document.querySelector("tone-button").addEventListener("click", e => {
-			e.target.setAttribute("label", "Rendering...");
-			e.target.setAttribute("disabled", "");
-      playMusic()
-			// var buffer = generateAudioOffline().then(buffer => {
-			// 	document.querySelector("tone-button").setAttribute("label", "Rendered");
-			// 	player.buffer = buffer;
-				document.querySelector("tone-play-toggle").removeAttribute("disabled");
-			// });
-		});
-		document.querySelector("tone-play-toggle").bind(player);
 
-	</script>
+    });
+    document.querySelector("tone-play-toggle").bind(player);
+
+
+    // from https://www.russellgood.com/how-to-convert-audiobuffer-to-audio-file/#render-as-wav
+
+    function make_download(abuffer, total_samples) {
+
+      // get duration and sample rate
+      var duration = abuffer.duration,
+        rate = abuffer.sampleRate,
+        offset = 0;
+
+      var new_file = URL.createObjectURL(bufferToWave(abuffer, total_samples));
+
+      var download_link = document.getElementById("download_link");
+      download_link.href = new_file;
+      var name = generateFileName("test");
+      download_link.download = name + ".wav";
+
+    }
+
+    function generateFileName(filename) {
+
+      var d = new Date();
+
+      var year = d.getFullYear();
+      var month = '' + (d.getMonth() + 1).toString().padStart(2, "0");
+      var date = d.getDate().toString().padStart(2, "0");
+      return filename + "-" + year + "-" + month + "-" + date + "-" + d.getTime() ;
+
+    }
+
+    // Convert an AudioBuffer to a Blob using WAVE representation
+    function bufferToWave(abuffer, len) {
+      var numOfChan = abuffer.numberOfChannels,
+        length = len * numOfChan * 2 + 44,
+        buffer = new ArrayBuffer(length),
+        view = new DataView(buffer),
+        channels = [],
+        i, sample,
+        offset = 0,
+        pos = 0;
+
+      // write WAVE header
+      setUint32(0x46464952); // "RIFF"
+      setUint32(length - 8); // file length - 8
+      setUint32(0x45564157); // "WAVE"
+
+      setUint32(0x20746d66); // "fmt " chunk
+      setUint32(16); // length = 16
+      setUint16(1); // PCM (uncompressed)
+      setUint16(numOfChan);
+
+      setUint32(abuffer.sampleRate);
+      setUint32(abuffer.sampleRate * 2 * numOfChan); // avg. bytes/sec
+      setUint16(numOfChan * 2); // block-align
+      setUint16(16); // 16-bit (hardcoded in this demo)
+
+      setUint32(0x61746164); // "data" - chunk
+      setUint32(length - pos - 4); // chunk length
+
+      // write interleaved data
+      for (i = 0; i < abuffer.numberOfChannels; i++)
+        channels.push(abuffer.getChannelData(i));
+
+      while (pos < length) {
+        for (i = 0; i < numOfChan; i++) { // interleave channels
+          sample = Math.max(-1, Math.min(1, channels[i][offset])); // clamp
+          sample = (0.5 + sample < 0 ? sample * 32768 : sample * 32767) | 0; // scale to 16-bit signed int
+          view.setInt16(pos, sample, true); // write 16-bit sample
+          pos += 2;
+        }
+        offset++ // next source sample
+      }
+
+      // create Blob
+      return new Blob([buffer], {
+        type: "audio/wav"
+      });
+
+      function setUint16(data) {
+        view.setUint16(pos, data, true);
+        pos += 2;
+      }
+
+      function setUint32(data) {
+        view.setUint32(pos, data, true);
+        pos += 4;
+      }
+    }
+  </script>
 </body>
+
 </html>

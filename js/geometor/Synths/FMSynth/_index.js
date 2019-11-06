@@ -1,4 +1,4 @@
 export {presets} from './_presets.js'
-export {electricCello} from './electricCello.js'
-export {kalimba} from './kalimba.js'
+export {ElectricCello} from './ElectricCello.js'
+export {Kalimba} from './Kalimba.js'
 export {thinSaws} from './thinSaws.js'

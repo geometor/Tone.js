@@ -1,5 +1,8 @@
 //instruments must be connected to the stream dest for recording.
-
+import * as Rhythms from './Rhythms/_index.js'
+export {Rhythms}
+import * as Pads from './Pads/_index.js'
+export {Pads}
 
 export function setPoints(synth, start) {
 

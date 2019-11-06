@@ -2,7 +2,7 @@ import * as Instruments from './instruments/_index.js'
 import * as Seqs from './Sequences/_index.js'
 import * as Effects from './Effects/_index.js'
 import * as Synths from './Synths/_index.js'
-import * as Rhythms from './Rhythms/_index.js'
+import * as Demos from './Demos/_index.js'
 
 //bind the interface
 const picker = document.querySelector("#synthPicker")
@@ -42,89 +42,40 @@ function setSynth() {
   synth.toMaster();
 }
 
-
-
 document.querySelector("#demo1").onclick = demo1;
 document.querySelector("#demo2").onclick = demo2;
-document.querySelector("#demo3").onclick = demo3;
-
-// playMusic()
+document.querySelector("#fib1").onclick = fib1;
+document.querySelector("#fib2").onclick = fib2;
 
 function demo1() {
-
   console.log("demo1")
-  // Tone.Transport.position=0
-  Tone.Transport.cancel(0)
-  Tone.Transport.bpm.value = 120;
-
-
-  Seqs.setPoints(synth, "0:0")
-  Seqs.setPoints(synth, "0:1")
-  Seqs.setPianoPart1(synth, "1:1")
-  Seqs.setPianoPart2(synth, "2:1")
-  Tone.Transport.stop("3:0")
-
-  Tone.Transport.start(Tone.now())
-
+  Demos.demo1(synth)
 }
 
 function demo2() {
-
   console.log("demo2")
-  // Tone.Transport.position=0
-  Tone.Transport.cancel(0)
-  Tone.Transport.bpm.value = 120;
-
-  setPing1(synth, "0:1")
-  setPing2(synth, "0:2")
-  setPing2(synth, "0:3")
-  setPing2(synth, "0:4")
-
-  setPing1(synth, "1:1")
-  setPing2(synth, "1:2")
-  setPing2(synth, "1:3")
-  setPing2(synth, "1:4")
-
-
-  Tone.Transport.stop("2:0")
-
-  Tone.Transport.start(Tone.now())
-
+  Demos.demo2(synth)
 }
 
-function demo3() {
-  console.log("demo3")
-  // Tone.Transport.position=0
-  Tone.Transport.cancel(0)
-  Tone.Transport.bpm.value = 120;
+function fib1() {
+  console.log("fib1")
+  var pick = picker.options[picker.selectedIndex].value
 
-  Rhythms.padMaj(synth, 0, "C4");
-
-  Tone.Transport.stop("4:0")
-
-  Tone.Transport.start(Tone.now())
+  Demos.Airports.musicForFibonacci(pick)
 }
-function setPing1(synth, start) {
+function fib2() {
+  console.log("fib2")
+  var pick = picker.options[picker.selectedIndex].value
 
-  var part1 = new Tone.Part(function(time, note) {
-    synth.triggerAttackRelease(note, "8n", time);
-  }, [
-    ["0:0", "C6"],
-  ]).start(start);
+  Demos.Airports.musicForFibonacci2(pick)
 }
-function setPing2(synth, start) {
 
-  var part1 = new Tone.Part(function(time, note) {
-    synth.triggerAttackRelease(note, "8n", time);
-  }, [
-    ["0:0", "C5"],
-  ]).start(start);
-}
 
 
 
 Tone.Transport.on("stop", () => {
   console.log("transport stop")
+  Tone.context.close();
 });
 Tone.Transport.on("start", () => {
   console.log("transport start")
