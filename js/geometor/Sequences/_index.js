@@ -3,22 +3,11 @@ import * as Rhythms from './Rhythms/_index.js'
 export {Rhythms}
 import * as Pads from './Pads/_index.js'
 export {Pads}
+import * as Draw from './Draw/_index.js'
+export {Draw}
+import * as Logo from './Logo.js'
+export {Logo}
 
-export function setPoints(synth, start) {
-
-  //TODO: set up Panner
-  var part1 = new Tone.Part(function(time, note) {
-    synth.triggerAttackRelease(note, "4n", time);
-  }, [
-    ["0:0", "C6"],
-  ]).start(start);
-
-  var part2 = new Tone.Part(function(time, note) {
-    synth.triggerAttackRelease(note, "4n", time);
-  }, [
-    ["0:0:1", "E6"],
-  ]).start(start);
-}
 
 export function setBass(synth, start) {
   var part = new Tone.Part(function(time, note) {
@@ -28,27 +17,6 @@ export function setBass(synth, start) {
   ]).start(start);
 }
 
-export function setLine(synth, start) {
-  setPoints(synth, start);
-
-  var part = new Tone.Part(function(time, note) {
-    synth.triggerAttackRelease(note, "4n", time);
-  }, [
-    ["0:0", "E4"],
-  ]).start(start);
-}
-
-export function setCircle(synth, start) {
-  setPoints(synth, start);
-
-  var part = new Tone.Part(function(time, note) {
-    synth.triggerAttackRelease(note, "4n", time);
-  }, [
-    ["0:0", "C4"],
-    ["0:1", "G4"],
-    ["0:2", "C4"],
-  ]).start(start);
-}
 
 
 export function setPianoPart1(synth, start) {

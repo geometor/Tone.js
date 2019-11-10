@@ -2,7 +2,8 @@ import * as Synths from '../Synths/_index.js'
 import * as Effects from '../Effects/_index.js'
 
 var airports = ["F4", "Ab4", "C5", "Db5", "Eb5", "F5", "Ab5"]
-var solfege = ["F4", "Ab4", "C5", "Db5", "Eb5", "F5", "Ab5"]
+// var solfege = ["F4", "Ab4", "C5", "Db5", "Eb5", "F5", "Ab5"]
+var pentatonic = ["C3", "G3", "D4", "A4", "E5", "C6"]
 
 export function musicForFibonacci(synthType) {
 
@@ -60,7 +61,7 @@ export function musicForFibonacci2(synthType) {
 
   const synths = []
 
-  airports.reverse().forEach( function(item){
+  pentatonic.forEach( function(item){
 
     var F3 =  F1 + F2
     var noteDuration = F1 + "m"

@@ -8,8 +8,8 @@ export function demo1(synth) {
   Tone.Transport.bpm.value = 120;
 
 
-  Seqs.setPoints(synth, "0:0")
-  Seqs.setPoints(synth, "0:1")
+  Seqs.Draw.setPoints(synth, "0:0")
+  Seqs.Draw.setPoints(synth, "0:1")
   Seqs.setPianoPart1(synth, "1:1")
   Seqs.setPianoPart2(synth, "2:1")
   Tone.Transport.stop("3:0")
