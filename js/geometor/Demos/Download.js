@@ -7,13 +7,15 @@ var airports = ["F4", "Ab4", "C5", "Db5", "Eb5", "F5", "Ab5"]
 // var solfege = ["F4", "Ab4", "C5", "Db5", "Eb5", "F5", "Ab5"]
 var pentatonic = ["C3", "G3", "D4", "A4", "E5", "C6"]
 
-export function musicForFibonacci(synthType) {
+export function musicForFibonacci(Transport) {
+  const synthPicker = document.querySelector("#synthPicker")
+  var synthType = synthPicker.options[synthPicker.selectedIndex].value
 
   var F1 = 1
   var F2 = 1
 
-  Tone.Transport.cancel(0)
-  Tone.Transport.bpm.value = 120;
+  Transport.cancel(0)
+  Transport.bpm.value = 120;
 
   // const synthType = "SquareSquare6"
   const synths = []
@@ -48,8 +50,9 @@ export function musicForFibonacci(synthType) {
   } )
 
 
+  Transport.stop("144:0:0")
 
-  Tone.Transport.start(Tone.now())
+  Transport.start()
 
 }
 

@@ -1,16 +1,19 @@
-function make_download(abuffer, total_samples) {
+// functions based on
+// https://www.russellgood.com/how-to-convert-audiobuffer-to-audio-file/
+
+export function toWav(abuffer, total_samples, basename = "test") {
 
   // get duration and sample rate
   var duration = abuffer.duration,
     rate = abuffer.sampleRate,
     offset = 0;
 
-  var new_file = URL.createObjectURL(bufferToWave(abuffer, total_samples));
 
   var download_link = document.getElementById("download_link");
+
+  var new_file = URL.createObjectURL(bufferToWave(abuffer, total_samples));
   download_link.href = new_file;
-  var name = generateFileName("test");
-  download_link.download = name + ".wav";
+  download_link.download = generateFileName(basename) + ".wav";
 
 }
 

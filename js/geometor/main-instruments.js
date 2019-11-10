@@ -3,6 +3,7 @@ import * as Seqs from './Sequences/_index.js'
 import * as Effects from './Effects/_index.js'
 import * as Synths from './Synths/_index.js'
 import * as Demos from './Demos/_index.js'
+import * as Download from './Recorder/download.js'
 
 //bind the interface
 const picker = document.querySelector("#synthPicker")
@@ -76,8 +77,11 @@ function fib2() {
 }
 
 function generateAudioOffline() {
+
   //the makeMusic function receives the Offline Transport as a parameter
+
   return Tone.Offline(Seqs.Logo.play, 10);
+  // return Tone.Offline(Demos.Download.musicForFibonacci, 44);
 }
 
 
@@ -92,6 +96,7 @@ Tone.Transport.on("start", () => {
 
 //play the buffer with a Tone.Player when it's been generated
 var player = new Tone.Player().toMaster();
+document.querySelector("tone-player").bind(player);
 
 //bind the interface
 document.querySelector("tone-button").addEventListener("click", e => {
@@ -104,7 +109,8 @@ document.querySelector("tone-button").addEventListener("click", e => {
     document.querySelector("tone-button").setAttribute("label", "Rendered");
     player.buffer = buffer;
     document.querySelector("tone-play-toggle").removeAttribute("disabled");
-    // make_download(buffer, buffer.length);
+
+    Download.toWav(buffer, buffer.length, "logo");
 
     // let blob = new Blob([buffer], { type: 'audio/webm;codecs=opus' });
     // const audio = document.querySelector('audio');
@@ -114,6 +120,8 @@ document.querySelector("tone-button").addEventListener("click", e => {
 
 });
 document.querySelector("tone-play-toggle").bind(player);
+document.querySelector("tone-oscilloscope").bind(player);
+document.querySelector("tone-fft").bind(player);
 
 /////
 

@@ -15,6 +15,14 @@
   <script type="text/javascript" src="./js/tonejs-ui.js" defer></script>
 
   <script type="module" src="./js/geometor/main-instruments.js" ></script>
+  <style>
+		tone-oscilloscope, tone-fft {
+			width: 100%;
+			height: 44px;
+			border-radius: 22px;
+			background-color: black;
+		}
+	</style>
 
 </head>
 
@@ -35,12 +43,9 @@
       <button id="logo" type="button">Logo</button>
 
       <div class="">
-        Tone.Offline renders a chunk of Tone.js code into an AudioBuffer. An offline instance of Tone.Transport is passed into the callback which can be used to schedule events. It may take a moment to render the sound.
-        <br><br>
-        <a href="https://tonejs.github.io/docs/Tone#offline-static">Tone.Offline</a> docs.
 
         <a id="download_link" href="#">download generated audio</a>
-        <audio controls></audio>
+        <!-- <audio controls></audio> -->
       </div>
 
     </tone-explanation>
@@ -48,6 +53,9 @@
     <tone-content>
       <tone-button label="Render"></tone-button>
       <tone-play-toggle disabled></tone-play-toggle>
+      <tone-oscilloscope></tone-oscilloscope>
+      <tone-fft></tone-fft>
+      <tone-player></tone-player>
 
       <tone-piano></tone-piano>
       <tone-am-synth></tone-am-synth>

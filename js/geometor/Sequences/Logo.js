@@ -21,7 +21,7 @@ export function play(Transport) {
   const circleSynth = Synths.getSynth("ElectricCello").toMaster();
 
 
-  Transport.bpm.value = 120;
+  Transport.bpm.value = 240;
   // Tone.Transport.cancel(0);
 
   // Seqs.Rhythms.setCymbalPart2(cymbal, "0:0");
@@ -35,7 +35,7 @@ export function play(Transport) {
   // fade
   Seqs.setBass(piano, "1:4:0");
   // 4 lines
-  Seqs.Draw.setLine(pointsSynths, lineSynth, "2:1:0", "F5");
+  Seqs.Draw.setLine(pointsSynths, lineSynth, "2:1:0", "C6");
   // triangle
   Seqs.Draw.setCircle(pointsSynths, circleSynth, "2:3:0", "C5");
   // 2 medians
@@ -45,10 +45,11 @@ export function play(Transport) {
   // fill
   Seqs.setBass(piano, "4:4:0");
   // first golden
-  Seqs.Draw.setLine(pointsSynths, lineSynth, "5:2:0", "D5");
+  Seqs.Draw.setLine(pointsSynths, lineSynth, "5:2:0", "D6");
   // second golden
-  Seqs.Draw.setLine(pointsSynths, lineSynth, "5:4:0", "C5");
+  Seqs.Draw.setLine(pointsSynths, lineSynth, "5:4:0", "C6");
 
+  // console.log(Transport.seconds)
   //fill
   Seqs.setBass(piano, "7:1:0");
 

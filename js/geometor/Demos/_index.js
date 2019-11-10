@@ -1,6 +1,8 @@
 import * as Seqs from '../Sequences/_index.js'
 import * as Airports from './Airports.js'
 export {Airports}
+import * as Download from './Download.js'
+export {Download}
 
 export function demo1(synth) {
   // Tone.Transport.position=0
