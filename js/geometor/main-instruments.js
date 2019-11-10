@@ -65,23 +65,23 @@ function demo2() {
 
 function fib1() {
   console.log("fib1")
-  var pick = picker.options[picker.selectedIndex].value
+  // var pick = picker.options[picker.selectedIndex].value
 
-  Demos.Airports.musicForFibonacci(pick)
+  Demos.Download.musicForFibonacci(Tone.Transport)
 }
 function fib2() {
   console.log("fib2")
-  var pick = picker.options[picker.selectedIndex].value
+  // var pick = picker.options[picker.selectedIndex].value
 
-  Demos.Airports.musicForFibonacci2(pick)
+  Demos.Download.musicForFibonacci2(Tone.Transport)
 }
 
 function generateAudioOffline() {
 
-  //the makeMusic function receives the Offline Transport as a parameter
+  //the play() function receives the Offline Transport as a parameter
 
-  return Tone.Offline(Seqs.Logo.play, 10);
-  // return Tone.Offline(Demos.Download.musicForFibonacci, 44);
+  // return Tone.Offline(Seqs.Logo.play, 10);
+  return Tone.Offline(Demos.Download.musicForFibonacci, 89);
 }
 
 
