@@ -51,7 +51,7 @@ document.querySelector("#fib2").onclick = fib2;
 
 function logo() {
   console.log("logo")
-  Seqs.Logo.play()
+  Seqs.Logo.play(Tone.Transport)
 }
 function demo1() {
   console.log("demo1")
@@ -68,6 +68,7 @@ function fib1() {
   // var pick = picker.options[picker.selectedIndex].value
 
   Demos.Download.musicForFibonacci(Tone.Transport)
+
 }
 function fib2() {
   console.log("fib2")
@@ -81,7 +82,8 @@ function generateAudioOffline() {
   //the play() function receives the Offline Transport as a parameter
 
   // return Tone.Offline(Seqs.Logo.play, 10);
-  return Tone.Offline(Demos.Download.musicForFibonacci, 89);
+  // return Tone.Offline(Demos.Download.musicForFibonacci, 89);
+  return Tone.Offline(Seqs.Logo.play, 10);
 }
 
 
