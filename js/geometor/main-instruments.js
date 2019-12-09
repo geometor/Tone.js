@@ -1,4 +1,4 @@
-import * as Instruments from './instruments/_index.js'
+import * as Instruments from './Instruments/_index.js'
 import * as Seqs from './Sequences/_index.js'
 import * as Effects from './Effects/_index.js'
 import * as Synths from './Synths/_index.js'
@@ -86,12 +86,11 @@ function generateAudioOffline() {
   return Tone.Offline(Seqs.Logo.play, 10);
 }
 
-
-
 Tone.Transport.on("stop", () => {
   console.log("transport stop")
   Tone.context.close();
 });
+
 Tone.Transport.on("start", () => {
   console.log("transport start")
 });

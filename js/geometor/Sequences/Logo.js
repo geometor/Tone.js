@@ -28,26 +28,26 @@ export function play(Transport) {
   // setKickPart();
   Seqs.setBass(piano, "0:2:0");
   // line
-  Seqs.Draw.setPoints(pointsSynths, "0:3:0", "C5");
-  Seqs.Draw.setLine(pointsSynths, lineSynth, "0:3:0", "C5");
+  // Seqs.Draw.setPoints(pointsSynths, "0:3:0", "C5");
+  Seqs.Draw.setLine(pointsSynths, lineSynth, "0:3:0", "C4");
   // vesica
-  Seqs.Draw.setCircle(pointsSynths, circleSynth, "1:1:0", "G5");
+  Seqs.Draw.setCircle(pointsSynths, circleSynth, "1:1:0", "G4");
   // fade
   Seqs.setBass(piano, "1:4:0");
   // 4 lines
-  Seqs.Draw.setLine(pointsSynths, lineSynth, "2:1:0", "C6");
+  Seqs.Draw.setLine(pointsSynths, lineSynth, "2:1:0", "F5");
   // triangle
   Seqs.Draw.setCircle(pointsSynths, circleSynth, "2:3:0", "C5");
   // 2 medians
-  Seqs.Draw.setLine(pointsSynths, lineSynth, "3:2:0", "G5");
+  Seqs.Draw.setLine(pointsSynths, lineSynth, "3:2:0", "F5");
   // main circle
-  Seqs.Draw.setCircle(pointsSynths, circleSynth, "3:4:0", "C5");
+  Seqs.Draw.setCircle(pointsSynths, circleSynth, "3:4:0", "G5");
   // fill
   Seqs.setBass(piano, "4:4:0");
   // first golden
-  Seqs.Draw.setLine(pointsSynths, lineSynth, "5:2:0", "D6");
+  Seqs.Draw.setLine(pointsSynths, lineSynth, "5:2:0", "C4");
   // second golden
-  Seqs.Draw.setLine(pointsSynths, lineSynth, "5:4:0", "C6");
+  Seqs.Draw.setLine(pointsSynths, lineSynth, "5:4:0", "C5");
 
   // console.log(Transport.seconds)
   //fill

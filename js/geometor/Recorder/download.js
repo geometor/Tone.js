@@ -51,7 +51,9 @@ function bufferToWave(abuffer, len) {
   setUint16(numOfChan);
 
   setUint32(abuffer.sampleRate);
+  // setUint32(48000);
   setUint32(abuffer.sampleRate * 2 * numOfChan); // avg. bytes/sec
+  // setUint32(48000 * 2 * numOfChan); // avg. bytes/sec
   setUint16(numOfChan * 2); // block-align
   setUint16(16); // 16-bit (hardcoded in this demo)
 

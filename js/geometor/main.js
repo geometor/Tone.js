@@ -1,4 +1,4 @@
-import * as Instruments from './instruments/_index.js'
+import * as Instruments from './Instruments/_index.js'
 import * as Seqs from './Sequences/_index.js'
 import * as Recorder from './Recorder/_index.js'
 
@@ -31,7 +31,7 @@ document.documentElement.addEventListener('mousedown', () => {
   started = true;
 
   Recorder.start();
-  Seqs.Logo.play();
+  Seqs.Logo.play(Tone.Transport);
 
   Tone.Transport.start();
 });
